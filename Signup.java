@@ -1,235 +1,216 @@
 package bank.management.system;
+
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Random;
+
 public class Signup extends JFrame implements ActionListener {
-    JRadioButton r1,r2,m1,m2,m3;
-    JButton next;
-    JComboBox comboBox1,comboBox2;
+    private JRadioButton maleRadio, femaleRadio, marriedRadio, unmarriedRadio;
+    private JButton nextButton;
+    private JComboBox<String> religionCombo, categoryCombo;
+    private JTextField textName, textFname, textEmail, textAdd, textCity, textState, textPin;
+    private JDateChooser dateChooser;
+    private JPanel mainPanel, formPanel;
 
-    JTextField textName ,textFname, textEmail,textAdd,textcity,textState,textPin,textPan,textAadhar;
+    public Signup() {
+        super("Account Registration");
 
-    JDateChooser dateChooser;
-    Signup(){
-        super("SIGN UP PAGE"); // ye frame ki heading pe jayega
-
-        JLabel label3 = new JLabel("Personal Details");
-        label3.setFont(new Font("Raleway", Font.BOLD,22));
-        label3.setBounds(290,90,600,30);
-        add(label3);
-
-        JLabel labelName = new JLabel("Name :");
-        labelName.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelName.setBounds(100,160,100,30);
-        add(labelName);
-
-        textName = new JTextField();
-        textName.setFont(new Font("Raleway",Font.BOLD, 14));
-        textName.setBounds(300,160,400,30);
-        add(textName);
-
-        JLabel labelfName = new JLabel("Father's Name :");
-        labelfName.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelfName.setBounds(100,200,200,30);
-        add(labelfName);
-
-        textFname = new JTextField();
-        textFname.setFont(new Font("Raleway",Font.BOLD, 14));
-        textFname.setBounds(300,200,400,30);
-        add(textFname);
-
-        JLabel DOB = new JLabel("Date of Birth");
-        DOB.setFont(new Font("Raleway", Font.BOLD, 20));
-        DOB.setBounds(100,240,200,30);
-        add(DOB);
-
-        dateChooser = new JDateChooser();
-        dateChooser.setForeground(new Color(105,105,105));
-        dateChooser.setBounds(300,240,400,30);
-        add(dateChooser);
-
-        JLabel labelG = new JLabel("Gender");
-        labelG.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelG.setBounds(100,280,200,30);
-        add(labelG);
-
-        r1 = new JRadioButton("Male");
-        r1.setFont(new Font("Raleway", Font.BOLD,14));
-        r1.setBackground(Color.white);
-        r1.setBounds(300,280,60,30);
-        add(r1);
-
-        r2 = new JRadioButton("Female");
-        r2.setBackground(Color.white);
-        r2.setFont(new Font("Raleway", Font.BOLD,14));
-        r2.setBounds(450,280,90,30);
-        add(r2);
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(r1);
-        buttonGroup.add(r2);
-
-        JLabel labelEmail = new JLabel("Email address :");
-        labelEmail.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelEmail.setBounds(100,320,200,30);
-        add(labelEmail);
-
-        textEmail = new JTextField();
-        textEmail.setFont(new Font("Raleway",Font.BOLD, 14));
-        textEmail.setBounds(300,320,400,30);
-        add(textEmail);
-
-
-        JLabel labelMs = new JLabel("Marital Status :");
-        labelMs.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelMs.setBounds(100,360,200,30);
-        add(labelMs);
-
-        m1 = new JRadioButton("Married");
-        m1.setBounds(300,360,100,30);
-        m1.setBackground(Color.white);
-        m1.setFont(new Font("Raleway", Font.BOLD,14));
-        add(m1);
-
-        m2 = new JRadioButton("Unmarried");
-        m2.setBackground(Color.white);
-        m2.setBounds(450,360,100,30);
-        m2.setFont(new Font("Raleway", Font.BOLD,14));
-        add(m2);
-
-        ButtonGroup buttonGroup1 = new ButtonGroup();
-        buttonGroup1.add(m1);
-        buttonGroup1.add(m2);
-
-        JLabel l3 = new JLabel("Religion :");
-        l3.setFont(new Font("Raleway", Font.BOLD,20));
-        l3.setBounds(100,405,200,30);
-        add(l3);
-
-        String religion[] = {"Hindu","Muslim","Sikh", "Christian", "Other"};
-        comboBox1 = new JComboBox(religion);
-        comboBox1.setBackground(new Color(200,200,200));
-        comboBox1.setFont(new Font("Raleway",Font.BOLD,14));
-        comboBox1.setBounds(300,400,400,30);
-        add(comboBox1);
-
-        JLabel l4 = new JLabel("Category : ");
-        l4.setFont(new Font("Raleway", Font.BOLD,20));
-        l4.setBounds(100,455,200,30);
-        add(l4);
-
-        String Category [] = {"General","OBC","SC", "ST", "Other"};
-        comboBox2 = new JComboBox(Category);
-        comboBox2.setBackground(new Color(200,200,200));
-        comboBox2.setFont(new Font("Raleway",Font.BOLD,14));
-        comboBox2.setBounds(300,460,400,30);
-        add(comboBox2);
-
-        JLabel labelAdd = new JLabel("Address :");
-        labelAdd.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelAdd.setBounds(100,500,200,30);
-        add(labelAdd);
-
-        textAdd = new JTextField();
-        textAdd.setFont(new Font("Raleway",Font.BOLD, 14));
-        textAdd.setBounds(300,500,400,30);
-        add(textAdd);
-
-        JLabel labelCity = new JLabel("City :");
-        labelCity.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelCity.setBounds(100,540,200,30);
-        add(labelCity);
-
-        textcity = new JTextField();
-        textcity.setFont(new Font("Raleway",Font.BOLD, 14));
-        textcity.setBounds(300,540,400,30);
-        add(textcity);
-
-        JLabel labelPin = new JLabel("Pin Code :");
-        labelPin.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelPin.setBounds(100,580,200,30);
-        add(labelPin);
-
-        textPin = new JTextField();
-        textPin.setFont(new Font("Raleway",Font.BOLD, 14));
-        textPin.setBounds(300,580,400,30);
-        add(textPin);
-
-        JLabel labelstate = new JLabel("State :");
-        labelstate.setFont(new Font("Raleway", Font.BOLD, 20));
-        labelstate.setBounds(100,620,200,30);
-        add(labelstate);
-
-        textState = new JTextField();
-        textState.setFont(new Font("Raleway",Font.BOLD, 14));
-        textState.setBounds(300,620,400,30);
-        add(textState);
-
-        next = new JButton("Next ->");
-        next.setFont(new Font("Raleway",Font.BOLD, 14));
-        next.setBackground(new Color(36,160,237));
-        next.setForeground(Color.WHITE);
-        next.setBounds(620,710,80,30);
-        next.addActionListener(this);
-        add(next);
-
-
-        getContentPane().setBackground(Color.white);
-        JLabel label1=new JLabel("REGISTRATION FORM");
-        label1.setBounds(160,20,600,40);
-        label1.setFont(new Font("AvantGarde", Font.BOLD, 50));
-        add(label1);
-        setLayout(null);
-        setSize(850,800); // frame ka size
-        setLocation(400,20); // frame ki location
-        setVisible(true); // frame ki visibility
-    }
-    public void actionPerformed(ActionEvent e) {
-
-        String Name = textName.getText();
-        String FName = textFname.getText();
-        String DOB = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
-        String Gender = null;
-        if(r1.isSelected()){
-            Gender = "Male";
-        }else if (r2.isSelected()){
-            Gender = "Female";
-        }
-        String Email = textEmail.getText();
-        String Marital_Status =null;
-        if (m1.isSelected()){
-            Marital_Status = "Married";
-        } else if (m2.isSelected()) {
-            Marital_Status = "Unmarried";
-        }
-
-        String Address = textAdd.getText();
-        String City = textcity.getText();
-        String Pincode = textPin.getText();
-        String State = textState.getText();
-        String Religion = (String) comboBox1.getSelectedItem();
-        String Category = (String) comboBox2.getSelectedItem();
-
-        try{
-            if (textName.getText().equals("")){
-                JOptionPane.showMessageDialog(null, "All the fiels are neccesary");
-
-            }else {
-                DBConnection c=new DBConnection();
-                String query="insert into SignupDetails values('"+Name+"','"+FName+"','"+DOB+"','"+Gender+"','"+Email+"','"+Marital_Status+"','"+Address+"','"+City+"','"+Pincode+"','"+State+"','"+Religion+"','"+Category+"')";
-                c.statement.executeUpdate(query);
-                new Signup2();
-                setVisible(false);
+        // Gradient background
+        mainPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                Color color1 = new Color(0, 102, 204);
+                Color color2 = new Color(0, 153, 255);
+                GradientPaint gp = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
             }
+        };
+        mainPanel.setLayout(new BorderLayout());
 
-        }catch (Exception E){
-            E.printStackTrace();
-        }
+        formPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setColor(new Color(255, 255, 255, 220));
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+            }
+        };
+        formPanel.setLayout(new GridBagLayout());
+        formPanel.setOpaque(false);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+
+        JLabel titleLabel = new JLabel("ACCOUNT REGISTRATION", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(0, 51, 102));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        formPanel.add(titleLabel, gbc);
+
+        JLabel sectionLabel = new JLabel("Personal Details", SwingConstants.LEFT);
+        sectionLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        sectionLabel.setForeground(new Color(70, 70, 70));
+        gbc.gridy = 1;
+        formPanel.add(sectionLabel, gbc);
+
+        addFormField("Full Name:", 2, formPanel, gbc);
+        textName = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textName, gbc);
+
+        addFormField("Father's Name:", 3, formPanel, gbc);
+        textFname = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textFname, gbc);
+
+        addFormField("Date of Birth:", 4, formPanel, gbc);
+        dateChooser = new JDateChooser();
+        dateChooser.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        dateChooser.getCalendarButton().setBackground(new Color(66, 165, 245));
+        dateChooser.getCalendarButton().setForeground(Color.WHITE);
+        JTextField dateText = ((JTextField)dateChooser.getDateEditor().getUiComponent());
+        dateText.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        gbc.gridx = 1;
+        formPanel.add(dateChooser, gbc);
+
+        addFormField("Gender:", 5, formPanel, gbc);
+        JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        genderPanel.setOpaque(false);
+        maleRadio = createRadioButton("Male");
+        femaleRadio = createRadioButton("Female");
+        ButtonGroup genderGroup = new ButtonGroup();
+        genderGroup.add(maleRadio);
+        genderGroup.add(femaleRadio);
+        genderPanel.add(maleRadio);
+        genderPanel.add(femaleRadio);
+        gbc.gridx = 1;
+        formPanel.add(genderPanel, gbc);
+
+        addFormField("Email Address:", 6, formPanel, gbc);
+        textEmail = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textEmail, gbc);
+
+        addFormField("Marital Status:", 7, formPanel, gbc);
+        JPanel maritalPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        maritalPanel.setOpaque(false);
+        marriedRadio = createRadioButton("Married");
+        unmarriedRadio = createRadioButton("Unmarried");
+        ButtonGroup maritalGroup = new ButtonGroup();
+        maritalGroup.add(marriedRadio);
+        maritalGroup.add(unmarriedRadio);
+        maritalPanel.add(marriedRadio);
+        maritalPanel.add(unmarriedRadio);
+        gbc.gridx = 1;
+        formPanel.add(maritalPanel, gbc);
+
+        addFormField("Religion:", 8, formPanel, gbc);
+        String[] religions = {"Hindu", "Muslim", "Sikh", "Christian", "Other"};
+        religionCombo = new JComboBox<>(religions);
+        gbc.gridx = 1;
+        formPanel.add(religionCombo, gbc);
+
+        addFormField("Category:", 9, formPanel, gbc);
+        String[] categories = {"General", "OBC", "SC", "ST", "Other"};
+        categoryCombo = new JComboBox<>(categories);
+        gbc.gridx = 1;
+        formPanel.add(categoryCombo, gbc);
+
+        addFormField("Address:", 10, formPanel, gbc);
+        textAdd = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textAdd, gbc);
+
+        addFormField("City:", 11, formPanel, gbc);
+        textCity = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textCity, gbc);
+
+        addFormField("State:", 12, formPanel, gbc);
+        textState = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textState, gbc);
+
+        addFormField("Pin Code:", 13, formPanel, gbc);
+        textPin = createTextField();
+        gbc.gridx = 1;
+        formPanel.add(textPin, gbc);
+
+        // NEXT button
+        nextButton = new JButton("NEXT");
+        nextButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        nextButton.setForeground(Color.WHITE);
+        nextButton.setBackground(new Color(0, 102, 204));
+        nextButton.setFocusPainted(false);
+        nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nextButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        nextButton.addActionListener(this);
+
+        gbc.gridy = 14;
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        formPanel.add(nextButton, gbc);
+
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        add(mainPanel);
+
+        setSize(800, 800);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setVisible(true);
     }
+
+    private void addFormField(String labelText, int y, JPanel panel, GridBagConstraints gbc) {
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        gbc.gridwidth = 1;
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        label.setForeground(Color.DARK_GRAY);
+        panel.add(label, gbc);
+    }
+
+    private JTextField createTextField() {
+        JTextField textField = new JTextField(20);
+        textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        return textField;
+    }
+
+    private JRadioButton createRadioButton(String text) {
+        JRadioButton rb = new JRadioButton(text);
+        rb.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        rb.setOpaque(false);
+        return rb;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == nextButton) {
+            // Example: just show a message (replace with DB logic or next form later)
+            new Signup2();
+        }
+    }
+
     public static void main(String[] args) {
         new Signup();
     }

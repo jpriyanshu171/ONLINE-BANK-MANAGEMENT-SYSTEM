@@ -1,121 +1,220 @@
 package bank.management.system;
 
-import com.sun.tools.javac.Main;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.sql.PreparedStatement;
 
 public class PinChange extends JFrame implements ActionListener {
-    JButton b1,b2;
-    JPasswordField p1,p2;
-    String Pin;
-    PinChange(String Pin){
-        this.Pin =Pin;
+    private JPasswordField newPinField, confirmPinField;
+    private JButton changeButton, backButton;
+    private String currentPin;
 
-        JLabel label1 = new JLabel("CHANGE YOUR PIN");
-        label1.setForeground(Color.BLACK);
-        label1.setFont(new Font("System", Font.BOLD, 30));
-        label1.setBounds(100,50,400,35);
-        add(label1);
+    public PinChange(String currentPin) {
+        this.currentPin = currentPin;
 
+        // Frame setup
+        setTitle("Change PIN");
+        setSize(850, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel label2 = new JLabel("New PIN: ");
-        label2.setForeground(Color.BLACK);
-        label2.setFont(new Font("System", Font.BOLD, 20));
-        label2.setBounds(350,200,150,35);
-        add(label2);
+        // Main panel with gradient background
+        JPanel mainPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                GradientPaint gp = new GradientPaint(0, 0, new Color(0, 102, 204), 0, getHeight(), new Color(0, 153, 255));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
-        p1 = new JPasswordField();
-        p1.setBackground(new Color(65,125,128));
-        p1.setForeground(Color.WHITE);
-        p1.setBounds(500,200,180,25);
-        p1.setFont(new Font("Raleway", Font.BOLD,22));
-        add(p1);
+        // Form panel with glass effect
+        JPanel formPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setColor(new Color(255, 255, 255, 200)); // Semi-transparent white
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+            }
+        };
+        formPanel.setLayout(new GridBagLayout());
+        formPanel.setOpaque(false);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
-        JLabel label3 = new JLabel("Re-Enter PIN: ");
-        label3.setForeground(Color.BLACK);
-        label3.setFont(new Font("System", Font.BOLD, 20));
-        label3.setBounds(350,250,400,35);
-        add(label3);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        p2 = new JPasswordField();
-        p2.setBackground(new Color(65,125,128));
-        p2.setForeground(Color.WHITE);
-        p2.setBounds(500,250,180,25);
-        p2.setFont(new Font("Raleway", Font.BOLD,22));
-        add(p2);
+        JLabel titleLabel = new JLabel("CHANGE YOUR PIN");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(0, 51, 102));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        formPanel.add(titleLabel, gbc);
 
+        JLabel newPinLabel = new JLabel("New PIN:");
+        newPinLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        formPanel.add(newPinLabel, gbc);
 
+        newPinField = new JPasswordField();
+        newPinField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        newPinField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+        newPinField.setEchoChar('•');
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        formPanel.add(newPinField, gbc);
 
-        b1 = new JButton("CHANGE");
-        b1.setBounds(350,400,150,35);
-        b1.setBackground(Color.green);
-        b1.setForeground(Color.BLACK);
-        b1.setFont(new Font("Raleway", Font.BOLD,20));
-        b1.addActionListener(this);
-        add(b1);
+        JLabel confirmPinLabel = new JLabel("Confirm PIN:");
+        confirmPinLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        formPanel.add(confirmPinLabel, gbc);
 
-        b2 = new JButton("BACK");
-        b2.setBounds(550,400,150,35);
-        b2.setBackground(Color.red);
-        b2.setForeground(Color.BLACK);
-        b2.setFont(new Font("Raleway", Font.BOLD,20));
-        b2.addActionListener(this);
-        add(b2);
+        confirmPinField = new JPasswordField();
+        confirmPinField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        confirmPinField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+        confirmPinField.setEchoChar('•');
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        formPanel.add(confirmPinField, gbc);
 
-        getContentPane().setBackground(Color.white);
+        JLabel requirementsLabel = new JLabel("PIN must be 4-6 digits");
+        requirementsLabel.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        requirementsLabel.setForeground(new Color(100, 100, 100));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        formPanel.add(requirementsLabel, gbc);
 
-        setSize(850,500);
-        setLayout(null);
-        setLocation(450,200);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        buttonPanel.setOpaque(false);
+
+        changeButton = createButton("CHANGE", new Color(39, 174, 96)); // Green
+        backButton = createButton("BACK", new Color(231, 76, 60)); // Red
+
+        buttonPanel.add(changeButton);
+        buttonPanel.add(backButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        formPanel.add(buttonPanel, gbc);
+
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        add(mainPanel);
+
         setVisible(true);
+    }
+
+    private JButton createButton(String text, Color bgColor) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        button.setForeground(Color.WHITE);
+        button.setBackground(bgColor);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.addActionListener(this);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(bgColor.darker());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(bgColor);
+            }
+        });
+
+        return button;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        try {
+            if (e.getSource() == changeButton) {
+                String newPin = new String(newPinField.getPassword());
+                String confirmPin = new String(confirmPinField.getPassword());
 
-        try{
-
-            String pin1 = p1.getText();
-            String pin2 = p2.getText();
-
-            if (!pin1.equals(pin2)){
-                JOptionPane.showMessageDialog(null,"Entered PIN does not match");
-                return;
-            }
-            if (e.getSource()==b1){
-                if (p1.getText().equals("")){
-                    JOptionPane.showMessageDialog(null,"Enter New PIN");
-                    return;
-                }
-                if (p2.getText().equals("")){
-                    JOptionPane.showMessageDialog(null,"Re-Enter New PIN");
+                if (newPin.isEmpty() || confirmPin.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Please enter and confirm your new PIN",
+                            "PIN Required", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
-                DBConnection c = new DBConnection();
-                String q1 = "update bank set pin = '"+pin1+"' where pin = '"+Pin+"'";
-                String q2 = "update LoginDetails set pin = '"+pin1+"' where pin = '"+Pin+"'";
-                String q3 = "update Signup3Details set pin = '"+pin1+"' where pin = '"+Pin+"'";
+                if (!newPin.equals(confirmPin)) {
+                    JOptionPane.showMessageDialog(this, "PINs do not match",
+                            "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-                c.statement.executeUpdate(q1);
-                c.statement.executeUpdate(q2);
-                c.statement.executeUpdate(q3);
+                if (!newPin.matches("\\d{4,6}")) {
+                    JOptionPane.showMessageDialog(this, "PIN must be 4-6 digits",
+                            "Invalid PIN", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
-                JOptionPane.showMessageDialog(null,"PIN changed successfully");
+                if (newPin.equals(currentPin)) {
+                    JOptionPane.showMessageDialog(this, "New PIN cannot be same as current PIN",
+                            "Invalid PIN", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                DBConnection connection = new DBConnection();
+
+                String updateBank = "UPDATE bank SET pin = ? WHERE pin = ?";
+                PreparedStatement pstmt1 = connection.getConnection().prepareStatement(updateBank);
+                pstmt1.setString(1, newPin);
+                pstmt1.setString(2, currentPin);
+                pstmt1.executeUpdate();
+
+                String updateLogin = "UPDATE LoginDetails SET pin = ? WHERE pin = ?";
+                PreparedStatement pstmt2 = connection.getConnection().prepareStatement(updateLogin);
+                pstmt2.setString(1, newPin);
+                pstmt2.setString(2, currentPin);
+                pstmt2.executeUpdate();
+
+                String updateSignup = "UPDATE Signup3Details SET pin = ? WHERE pin = ?";
+                PreparedStatement pstmt3 = connection.getConnection().prepareStatement(updateSignup);
+                pstmt3.setString(1, newPin);
+                pstmt3.setString(2, currentPin);
+                pstmt3.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, "PIN changed successfully",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+
                 setVisible(false);
-                new Main_menu(Pin);
-
-            } else if (e.getSource()==b2) {
-                new Main_menu(Pin);
+                new Main_menu(newPin);
+            } else if (e.getSource() == backButton) {
                 setVisible(false);
+                new Main_menu(currentPin);
             }
-
-
-        }catch (Exception E){
-            E.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error changing PIN: " + ex.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
