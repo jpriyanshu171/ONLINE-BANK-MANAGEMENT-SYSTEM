@@ -1,4 +1,4 @@
-🏦 ONLINE BANK MANAGEMENT SYSTEM
+#🏦 ONLINE BANK MANAGEMENT SYSTEM
 A Java-based desktop banking simulation application built with Java Swing and JDBC for educational purposes. This system allows users to sign up, log in, check balance, deposit, withdraw, and manage their account securely.
 
 📌 Features
