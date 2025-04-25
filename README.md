@@ -1,12 +1,33 @@
-#🏦 ONLINE BANK MANAGEMENT SYSTEM
-A Java-based desktop banking simulation application built with Java Swing and JDBC for educational purposes. This system allows users to sign up, log in, check balance, deposit, withdraw, and manage their account securely.
+# 🏦 ONLINE BANK MANAGEMENT SYSTEM
 
-📌 Features
+A **Java-based desktop banking simulation app** built using **Java Swing** and **JDBC**, ideal for learning and educational purposes. Users can sign up, log in, check balance, deposit or withdraw money, and manage their account securely.
 
-User authentication (Login/Signup)
-Balance enquiry
-Deposit and Withdraw functions
-PIN change functionality
-Transaction history (optional to add)
-JDBC-based database connectivity
-Java Swing GUI for user interaction
+---
+
+## 📌 Features
+
+- ✅ User Authentication (Login / Signup)
+- 💰 Deposit & Withdrawal
+- 🔎 Balance Enquiry
+- 🔐 PIN Change
+- 🧾 Optional: Transaction History
+- 🖥️ Java Swing GUI
+- 🔌 JDBC-based MySQL connectivity
+
+---
+
+## 🛠️ Tech Stack
+
+- Java
+- Java Swing (GUI)
+- JDBC
+- MySQL
+- IDE: IntelliJ IDEA
+
+---
+
+## 🚀 Getting Started
+
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/jpriyanshu171/ONLINE-BANK-MANAGEMENT-SYSTEM.git
