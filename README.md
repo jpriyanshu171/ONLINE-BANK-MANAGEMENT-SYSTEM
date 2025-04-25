@@ -31,3 +31,11 @@ A **Java-based desktop banking simulation app** built using **Java Swing** and *
 1. **Clone the repo**
    ```bash
    git clone https://github.com/jpriyanshu171/ONLINE-BANK-MANAGEMENT-SYSTEM.git
+
+---
+
+## 🙋‍♂️ Author
+
+**Priyanshu Jaiswal**  
+📧 Email: jpriyanshu171@gmail.com  
+📌 GitHub: [@jpriyanshu171](https://github.com/jpriyanshu171)
